@@ -1,0 +1,32 @@
+# --- Archivos de entorno ---
+.env
+*.env
+
+# --- Configuración local ---
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+.DS_Store
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*.nbconvert.ipynb
+
+# --- Entornos virtuales ---
+venv/
+.env/
+env/
+.venv/
+ENV/
+
+# --- Archivos temporales ---
+*.log
+*.tmp
+*.bak
+*.swp
+*~
