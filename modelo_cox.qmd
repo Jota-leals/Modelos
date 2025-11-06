@@ -1,0 +1,77 @@
+---
+title: "Modelo Cox - Análisis de Recesión"
+author: "Juan Leal"
+date: today
+format:
+    pdf:
+        toc: True
+        number-sections: true
+execute:
+    echo: true
+    warning: false
+    message: false
+---
+
+```{python}
+    import pandas as pd
+    import numpy as np
+    import statsmodels.api as sm
+    from lifelines import ExponentialFitter, WeibullFitter, CoxPHFitter
+```
+
+```{python}
+    %store -r df_cox
+```
+
+```{python}
+    df_cox = df_cox[df_cox['duration']>0]
+    df_cox
+```
+
+```{python}
+    #Modelo Exponencial
+    exp_model = ExponentialFitter()
+    exp_model.fit(df_cox['duration'], event_observed=df_cox['event'])
+    summary = exp_model.summary
+    print(summary)
+```
+
+```{python}
+    # Weibull
+    weibull_model = WeibullFitter()
+    weibull_model.fit(df_cox['duration'], event_observed=df_cox['event'])
+    summary = weibull_model.summary
+    print(summary)
+```
+
+```{python}
+    #CoX
+    cox = CoxPHFitter()
+    cox.fit(df_cox, duration_col='duration', event_col='event', formula="GDP")
+    summary = cox.summary
+    print(summary)
+```
+
+```{python}
+    #CoX
+    cox = CoxPHFitter()
+    cox.fit(df_cox, duration_col='duration', event_col='event', formula="GDP+Personal_Income")
+    summary = cox.summary
+    print(summary)
+```
+
+```{python}
+    #CoX
+    cox = CoxPHFitter()
+    cox.fit(df_cox, duration_col='duration', event_col='event', formula="GDP+Personal_Income+TasaDesempleo")
+    summary = cox.summary
+    print(summary)
+```
+
+```{python}
+    #CoX
+    cox = CoxPHFitter()
+    cox.fit(df_cox, duration_col='duration', event_col='event', formula="GDP+TasaDesempleo")
+    summary = cox.summary
+    print(summary)
+```
