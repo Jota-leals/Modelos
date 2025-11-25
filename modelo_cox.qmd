@@ -75,3 +75,38 @@ execute:
     summary = cox.summary
     print(summary)
 ```
+
+```{python}
+    # Ordenar estados por GDP
+    df_sorted = df_cox.sort_values(by='GDP')
+
+    # 25 estados con menor GDP
+    df_low_gdp = df_sorted.iloc[:25].copy()
+
+    # 25 estados con mayor GDP
+    df_high_gdp = df_sorted.iloc[25:].copy()
+```
+
+```{python}
+    df_high_gdp
+```
+
+```{python}
+    df_low_gdp
+```
+
+```{python}
+    #CoX
+    cox_low = CoxPHFitter()
+    cox_low.fit(df_low_gdp, duration_col='duration', event_col='event', formula="GDP")
+    summary = cox_low.summary
+    print(summary)
+```
+
+```{python}
+    #CoX
+    cox_high = CoxPHFitter()
+    cox_high.fit(df_high_gdp, duration_col='duration', event_col='event', formula="GDP")
+    summary = cox_high.summary
+    print(summary)
+```
