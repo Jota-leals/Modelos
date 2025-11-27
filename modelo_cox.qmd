@@ -16,7 +16,7 @@ execute:
     import pandas as pd
     import numpy as np
     import statsmodels.api as sm
-    from lifelines import ExponentialFitter, WeibullFitter, CoxPHFitter
+    from lifelines import ExponentialFitter, WeibullFitter, CoxPHFitter, KaplanMeierFitter
 ```
 
 ```{python}
@@ -26,6 +26,21 @@ execute:
 ```{python}
     df_cox = df_cox[df_cox['duration']>0]
     df_cox
+```
+
+```{python}
+    #Modelo Kaplan Meier
+    df_sorted_duration = df_cox.sort_values(by='duration')
+    estados_menor_duracion = df_sorted_duration.head(5)
+    estados_mayor_duracion = df_sorted_duration.tail(5)
+    df_km = pd.concat([estados_menor_duracion, estados_mayor_duracion])
+
+    kmf = KaplanMeierFitter()
+    kmf.fit(df_km['duration'], event_observed=df_km['event'])
+
+    km_summary = kmf.survival_function_.reset_index()
+    km_summary.rename(columns={'KM_estimate': 'supervivencia'}, inplace=True)
+    print(km_summary.head())
 ```
 
 ```{python}
